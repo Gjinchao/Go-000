@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/pkg/errors"
 )
 
 var db *sql.DB
@@ -20,9 +19,10 @@ func init() {
 
 func SelectByUsername(username string) (user *User, err error) {
 	user = &User{}
-	err = db.QueryRow("select username, address from test.user where username = ?", username).Scan(user)
+	err = db.QueryRow("select username, address from test.users where username = ?", username).Scan(&user.Username,
+		&user.Address)
 	if err != nil {
-		return user, errors.Wrap(err, "find no user with username "+username)
+		return nil, fmt.Errorf("can not query user with username \"%s\" ----> %w", username, err)
 	}
 	return user, nil
 }
