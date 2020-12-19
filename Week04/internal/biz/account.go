@@ -2,7 +2,6 @@ package biz
 
 import (
 	"github.com/Gjinchao/Go-000/Week04/internal/data"
-	"github.com/Gjinchao/Go-000/Week04/internal/service"
 	"time"
 )
 
@@ -17,7 +16,7 @@ type accountBiz struct {
 	accountRepo AccountRepo
 }
 
-func NewAccountBiz(accountRepo AccountRepo) service.AccountBiz {
+func NewAccountBiz(accountRepo AccountRepo) accountBiz {
 	return accountBiz{accountRepo: accountRepo}
 }
 
@@ -35,14 +34,15 @@ func (accountBiz accountBiz) Find(do *AccountDo) bool {
 }
 
 func (accountBiz accountBiz) Insert(do *AccountDo) error {
+	now := time.Now()
 	po := data.AccountPo{
 		Id:        do.Id,
 		Username:  do.Username,
 		Phone:     do.Phone,
 		EncryPwd:  do.EncryPwd,
-		CreatedAt: time.Now(),
+		CreatedAt: &now,
 		DeletedAt: nil,
-		UpdatedAt: time.Now(),
+		UpdatedAt: &now,
 	}
 	return accountBiz.accountRepo.Insert(&po)
 }

@@ -4,7 +4,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewAccountInterface(accountService AccountService) {
+type AccountInterface struct {
+	*gin.Engine
+}
+
+func NewAccountInterface(accountService AccountService) AccountInterface {
 	r := gin.Default()
 	account := r.Group("/accounts")
 	{
@@ -18,6 +22,8 @@ func NewAccountInterface(accountService AccountService) {
 		session.POST("", accountService.Login())
 		session.DELETE("", accountService.Logout())
 	}
+
+	return AccountInterface{r}
 }
 
 type AccountService interface {

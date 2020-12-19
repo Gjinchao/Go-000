@@ -3,7 +3,6 @@ package service
 import (
 	"crypto/md5"
 	"fmt"
-	"github.com/Gjinchao/Go-000/Week04/api"
 	"github.com/Gjinchao/Go-000/Week04/internal/biz"
 	"github.com/gin-gonic/gin"
 )
@@ -19,7 +18,7 @@ type accountService struct {
 	accountBiz AccountBiz
 }
 
-func NewAccountService(accountBiz AccountBiz) api.AccountService {
+func NewAccountService(accountBiz AccountBiz) accountService {
 	return accountService{accountBiz: accountBiz}
 }
 

@@ -1,6 +1,7 @@
 package data
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -9,12 +10,16 @@ type AccountPo struct {
 	Username  string
 	Phone     string
 	EncryPwd  string
-	CreatedAt time.Time
-	DeletedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt *time.Time
+	DeletedAt *time.Time
+	UpdatedAt *time.Time
 }
 
 type accountRepo struct{}
+
+func NewAccountRepo() accountRepo {
+	return accountRepo{}
+}
 
 func (accountRepo) QueryById(id string) (AccountPo, error) {
 	//todo
@@ -31,7 +36,8 @@ func (accountRepo) QueryByPhone(phone string) (AccountPo, error) {
 	return AccountPo{}, nil
 }
 
-func (accountRepo) Insert(*AccountPo) error {
+func (accountRepo) Insert(po *AccountPo) error {
 	//todo
+	fmt.Println(po.Username + " / " + po.Phone + " 持久化。")
 	return nil
 }
